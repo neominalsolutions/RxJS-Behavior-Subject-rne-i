@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { MessageStateService } from './message-state.service';
+import { sendMessage } from './stores/actions/message-change.action';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,15 @@ export class AppComponent {
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private mS: MessageStateService
+    private mS: MessageStateService,
+    private store: Store<{ messageState: any }>
   ) {
     primengConfig.ripple = true;
+    console.log('messageState', store);
+    this.store.select('messageState').subscribe((msg) => {
+      console.log('msg', msg);
+      this.message = msg;
+    });
   }
 
   showDialog() {
@@ -27,5 +35,7 @@ export class AppComponent {
     this.message = msg;
     // state service
     this.mS.sendMessage(msg);
+    // ngRx ile
+    this.store.dispatch(sendMessage({ message: msg }));
   }
 }

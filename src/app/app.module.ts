@@ -11,6 +11,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Subs1Component } from './components/subs1/subs1.component';
 import { Subs2Component } from './components/subs2/subs2.component';
+import { StoreModule } from '@ngrx/store';
+import { messageChangeReducer } from './stores/reducers/message-change.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent, Subs1Component, Subs2Component],
@@ -23,6 +26,8 @@ import { Subs2Component } from './components/subs2/subs2.component';
     InputTextModule,
     BrowserAnimationsModule,
     FormsModule,
+    StoreModule.forRoot({ messageState: messageChangeReducer }),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [AsyncPipe],
   bootstrap: [AppComponent],

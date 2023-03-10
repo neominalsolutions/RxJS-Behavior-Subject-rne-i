@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MessageStateService } from 'src/app/message-state.service';
 
 @Component({
@@ -7,9 +8,14 @@ import { MessageStateService } from 'src/app/message-state.service';
   styleUrls: ['./subs2.component.css'],
 })
 export class Subs2Component {
-  constructor(public mS: MessageStateService) {
-    mS.getMessage().subscribe((message: string) => {
-      console.log('m', message);
+  message: string = '';
+
+  constructor(
+    public mS: MessageStateService,
+    private store: Store<{ messageState: any }>
+  ) {
+    store.select('messageState').subscribe((msg) => {
+      this.message = msg;
     });
   }
 }

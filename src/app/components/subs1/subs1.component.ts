@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { MessageStateService } from 'src/app/message-state.service';
 
 @Component({
@@ -7,5 +9,14 @@ import { MessageStateService } from 'src/app/message-state.service';
   styleUrls: ['./subs1.component.css'],
 })
 export class Subs1Component {
-  constructor(public mS: MessageStateService) {}
+  message: string = '';
+
+  constructor(
+    public mS: MessageStateService,
+    private store: Store<{ messageState: any }>
+  ) {
+    store.select('messageState').subscribe((msg) => {
+      this.message = msg;
+    });
+  }
 }
